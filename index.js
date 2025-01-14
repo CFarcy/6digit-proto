@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // DEBUG
+  const debug = document.getElementById('debug');
+
   const otpElement = document.getElementById('otp');
   const inputs = Array.from(otpElement.children)
   inputs[0].focus();
@@ -7,8 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', (e) => {
       const value = e.target.value;
 
+      // DEBUG
+      debug.innerText = value;
+
       // Mobile Web Browser autofill fix
       if (value && value.length > 1) {
+        // DEBUG
+        debug.innerText = `value: ${[...value]}`;
+
         [...value].forEach((digit, index) => {
           inputs[index].value = digit;
         });
