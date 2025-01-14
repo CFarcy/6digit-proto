@@ -1,43 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // DEBUG
-  const debug = document.getElementById('debug');
-
   const otpElement = document.getElementById('otp');
   const inputs = Array.from(otpElement.children)
-  inputs[0].focus();
 
-  otpElement.addEventListener('input', (e) => {
+  inputs[0].focus();
+  inputs[0].addEventListener('input', e => {
     const value = e.target.value;
-    value.split("").forEach((digit, index) => {
-      inputs[index].value = digit;
-    });
-    inputs[inputs.length - 1].focus();
+    if (value.length > 1) {
+      value.split("").forEach((digit, index) => {
+        inputs[index].value = digit;
+      });
+      inputs[digit.length - 1].focus();
+    }
   });
 
   inputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
       const value = e.target.value;
 
-      // DEBUG
-      debug.innerText = value;
-
-      // Mobile Web Browser autofill fix
-      if (value && value.length > 1) {
-        // DEBUG
-        debug.innerText = `value: ${[...value]}`;
-
-        [...value].forEach((digit, index) => {
-          inputs[index].value = digit;
-        });
-        inputs[inputs.length - 1].focus();
-        return;
-      }
-
       if (!/^\d$/.test(value)) {
         e.target.value = '';
         return;
       }
-
 
       if (value && index < inputs.length - 1) {
         inputs[index + 1].focus();
