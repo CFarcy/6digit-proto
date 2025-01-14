@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputs = Array.from(otpElement.children)
   inputs[0].focus();
 
+  otpElement.addEventListener('input', (e) => {
+    const value = e.target.value;
+    value.split("").forEach((digit, index) => {
+      inputs[index].value = digit;
+    });
+    inputs[inputs.length - 1].focus();
+  });
+
   inputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
       const value = e.target.value;
