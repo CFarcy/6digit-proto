@@ -44,27 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('focus', (e) => { e.target.select() });
   });
 
-  async function getOTPCCredential(inputs) {
-    const debugList = document.getElementById('debug-otp');
-    const otp = await navigator.credentials.get({ otp: ['sms'] });
-    
-
-    // once we got the otp code, we populate the 6 digit-inputs form
-    if (opt && otp.code) {
-      // DEBUG
-      const otpItemNode = document.createElement('li');
-      otpItemNode.innerText = `${otp.code} - ${typeof otp.code}`;
-      debugList.appendChild(otpItemNode);
-      // END DEBUG
-
-      [...opt.code].forEach((digit, index) => {
-        inputs[index].value = digit;j
-        const digitNode = document.createElement('li');
-        digitNode.innerText = `${digit} - ${index} (index)`;
-        debugList.appendChild(digitNode);
+  // Mobile Web Browser autofill fix
+  inputs[0].addEventListener('input', () => {
+    const optCode = e.target.value;
+    if (optCode.length > 1) {
+      optCode.split("").forEach((digit, index) => {
+        inputs[index].value = digit;
       });
-      inputs[inputs.length - 1].focus(); // focus on the last input element
+      inputs[inputs.length - 1].focus();
     }
-  }
-  getOTPCCredential(inputs);
+  });
+  inputs[0].focus();
 });
