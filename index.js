@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       value.split("").forEach((digit, index) => {
         inputs[index].value = digit;
       });
-      inputs[digit.length - 1].focus();
+      inputs[value.length - 1].focus();
     }
   });
 
