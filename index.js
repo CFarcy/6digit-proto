@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (/^\d{6}$/.test(pasteData)) {
         [...pasteData].forEach((digit, index) => {
           if (inputs[index]) {
-            inputs[index].value = pasteData[index];
+            inputs[index].value = digit;
           }
 
           if (index < inputs.length - 1) {
@@ -45,12 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   async function getOTPCCredential(inputs) {
-    const otp = await navigator.credentials.get({ otp: ["sms"] });
+    const debugList = document.getElementById('debug-otp');
+    const otp = await navigator.credentials.get({ otp: ['sms'] });
+    
 
     // once we got the otp code, we populate the 6 digit-inputs form
     if (opt && otp.code) {
-      opt.code.forEach((digit, index) => {
+      // DEBUG
+      const otpItemNode = document.createElement('li');
+      otpItemNode.innerText = `${otp.code} - ${typeof otp.code}`;
+      debugList.appendChild(otpItemNode);
+      // END DEBUG
+
+      [...opt.code].forEach((digit, index) => {
         inputs[index].value = digit;j
+        const digitNode = document.createElement('li');
+        digitNode.innerText = `${digit} - ${index} (index)`;
+        debugList.appendChild(digitNode);
       });
       inputs[inputs.length - 1].focus(); // focus on the last input element
     }
