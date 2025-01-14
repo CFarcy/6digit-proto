@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Waiting for the sms to be received');
-  navigator.credentials.get()
+  navigator.credentials.get({ otp: ["sms"] })
 
   const otpElement = document.getElementById('otp');
   const inputs = Array.from(otpElement.children)
