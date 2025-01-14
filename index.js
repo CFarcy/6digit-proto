@@ -1,16 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Waiting for the sms to be received');
   const otpElement = document.getElementById('otp');
   const inputs = Array.from(otpElement.children)
+  inputs[0].focus();
 
   inputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
       const value = e.target.value;
 
+      // Mobile Web Browser autofill fix
+      if (value && value.length > 1) {
+        [...value].forEach((digit, index) => {
+          inputs[index].value = digit;
+        });
+        inputs[inputs.length - 1].focus();
+        return;
+      }
+
       if (!/^\d$/.test(value)) {
         e.target.value = '';
         return;
       }
+
 
       if (value && index < inputs.length - 1) {
         inputs[index + 1].focus();
@@ -43,16 +53,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // select the input value. Can be change by entering a new value directly
     input.addEventListener('focus', (e) => { e.target.select() });
   });
-
-  // Mobile Web Browser autofill fix
-  inputs[0].addEventListener('input', () => {
-    const optCode = e.target.value;
-    if (optCode.length > 1) {
-      optCode.split("").forEach((digit, index) => {
-        inputs[index].value = digit;
-      });
-      inputs[inputs.length - 1].focus();
-    }
-  });
-  inputs[0].focus();
 });
