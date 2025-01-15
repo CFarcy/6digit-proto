@@ -3,19 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputs = Array.from(otpElement.children)
 
   inputs[0].focus();
+  inputs[0].addEventListener('input', e => {
+    const value = e.target.value;
+    if (value.length > 1) {
+      value.split("").forEach((digit, index) => {
+        inputs[index].value = digit;
+      });
+      inputs[value.length - 1].focus();
+    }
+  });
 
   inputs.forEach((input, index) => {
     input.addEventListener('input', (e) => {
       const value = e.target.value;
 
-      if (value.length > 1) {
-        value.split("").forEach((digit, index) => {
-          inputs[index].value = digit;
-        });
-        inputs[value.length - 1].focus();
-        return;
-      }
- 
       if (!/^\d$/.test(value)) {
         e.target.value = '';
         return;
