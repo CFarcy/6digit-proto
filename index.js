@@ -18,14 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const value = e.target.value;
 
       if (!/^\d$/.test(value)) {
+        // console.log('not a digit', value, typeof value);
         e.target.value = '';
         return;
       }
 
-      if (value && index < inputs.length - 1) {
+      if (index < inputs.length - 1) {
         inputs[index + 1].focus();
         return;
       }
+
+      inputs[index].select();
+      return;
     });
 
     input.addEventListener('paste', (e) => {
@@ -54,3 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('focus', (e) => { e.target.select() });
   });
 });
+
+
+function autofocus(event) {
+  const value = e.target.value;
+
+  if (!/^\d$/.test(value)) {
+    console.log('not a digit', value, typeof value);
+    // e.target.value = '';
+    return;
+  }
+
+  if (index < inputs.length - 1) {
+    inputs[index + 1].focus();
+    return;
+  }
+
+  inputs[index].select();
+  return;
+}
