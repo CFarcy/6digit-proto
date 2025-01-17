@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const otpElement = document.getElementById('otp');
   const inputs = Array.from(otpElement.children)
 
